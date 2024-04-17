@@ -8,9 +8,13 @@ from .models import Greeting
 # Create your views here.
 
 
+def balance(request):
+    balance = 30
+    return HttpResponse(balance)
+
 def index(request):
     times = int(os.environ.get('TIMES', 3))
-    return HttpResponse('Hello! ' * times)
+    return HttpResponse('Hello pls 348! ' * times)
 
     ## teacup:
     # r = requests.get('https://httpbin.org/status/418')
