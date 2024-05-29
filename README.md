@@ -8,18 +8,12 @@ git push heroku main
 heroku ps
 heroku ps:scale web=0
 
-
-# windows
 cd ~/Repos/ghpc-be
 source .venv/bin/activate
 
 pip install -r requirements.txt
 heroku local --port 5001
 
-
-# linux
-cd ~/Documents/repos/ghpc-be/
-source .venv/bin/activate
 # to exit
 deactivate
 
@@ -32,3 +26,8 @@ heroku addons:open papertrail
 
 # run a script in the context of your app, for example if you had cleanup/one-off scripts that need to be run:
 https://devcenter.heroku.com/articles/getting-started-with-python#start-a-console
+
+
+# interact with PostgreSQL
+sudo su - postgres
+psql
