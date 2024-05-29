@@ -1,5 +1,7 @@
 # ghpc-be
 
+heroku git:remote -a ghpc-be
+
 # push and deploy
 git push heroku main
 
@@ -8,16 +10,18 @@ heroku ps:scale web=0
 
 
 # windows
-cd C:\Users\craig\Documents\Software\ghpc-be\
-.\.venv\Scripts\activate
+cd ~/Repos/ghpc-be
+source .venv/bin/activate
 
 pip install -r requirements.txt
-heroku local --port 5001 -f Procfile.windows
+heroku local --port 5001
 
 
 # linux
 cd ~/Documents/repos/ghpc-be/
 source .venv/bin/activate
+# to exit
+deactivate
 
 pip install -r requirements.txt
 heroku local --port 5001
