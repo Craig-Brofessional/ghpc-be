@@ -8,6 +8,8 @@ git push heroku main
 heroku ps
 heroku ps:scale web=0
 
+
+# local
 cd ~/Repos/ghpc-be
 source .venv/bin/activate
 
@@ -31,3 +33,17 @@ https://devcenter.heroku.com/articles/getting-started-with-python#start-a-consol
 # interact with PostgreSQL
 sudo su - postgres
 psql
+
+
+# Local setup:
+sudo apt-get install postgresql
+sudo apt-get install libpq-dev
+sudo su postgres
+psql
+CREATE USER crode WITH PASSWORD '';
+ALTER ROLE crode WITH SUPERUSER CREATEDB CREATEROLE REPLICATION BYPASSRLS;
+
+https://stackoverflow.com/questions/69676009/psql-error-connection-to-server-on-socket-var-run-postgresql-s-pgsql-5432
+sudo service postgresql restart
+
+python manage.py migrate
