@@ -29,4 +29,24 @@ class Migration(migrations.Migration):
                 ),
             ],
         ),
+
+        migrations.CreateModel(
+            name="Pushup",
+            fields=[
+                (
+                    "user",
+                    models.IntegerField(primary_key=True)
+                ),
+                (
+                    "balance",
+                    models.IntegerField(default=0)
+                ),
+                (
+                    "datetime_updated",
+                    models.DateTimeField(
+                        verbose_name="datetime updated", auto_now=True
+                    ),
+                ),
+            ],
+        ),
     ]

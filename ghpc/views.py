@@ -3,14 +3,22 @@ import requests
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from .models import Greeting
+from .models import Greeting, Pushups
 
 # Create your views here.
 
 
 def balance(request):
-    balance = 30
+    balance = 40
     return HttpResponse(balance)
+
+# def balance(request):
+
+def increment(request):
+    # print(request)
+    return HttpResponse("bs")
+
+
 
 def index(request):
     times = int(os.environ.get('TIMES', 3))
@@ -31,7 +39,7 @@ def db(request):
     #      process entry in `Procfile`, git committed your changes and re-deployed the app.
     #
     # When running the app locally:
-    #   1. You have run `./manage.py migrate` to create the `hello_greeting` database table.
+    #   1. You have run `./manage.py migrate` to create the `ghpc_greeting` database table.
 
     greeting = Greeting()
     greeting.save()
