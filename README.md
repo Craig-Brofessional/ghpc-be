@@ -19,10 +19,6 @@ heroku local --port 5001
 # to exit
 deactivate
 
-pip install -r requirements.txt
-heroku local --port 5001
-
-
 # papertrail logs
 heroku addons:open papertrail
 
@@ -46,4 +42,15 @@ ALTER ROLE crode WITH SUPERUSER CREATEDB CREATEROLE REPLICATION BYPASSRLS;
 https://stackoverflow.com/questions/69676009/psql-error-connection-to-server-on-socket-var-run-postgresql-s-pgsql-5432
 sudo service postgresql restart
 
+python manage.py makemigrations
 python manage.py migrate
+
+
+# Reset DB
+// repeat for all created tables
+DROP TABLE ghpc_pushup;
+DROP TABLE ghpc_greeting;
+TRUNCATE TABLE django_migrations;
+
+python manage.py migrate --fake
+python manage.py migrate ghpc 0001

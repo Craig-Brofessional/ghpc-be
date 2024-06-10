@@ -15,15 +15,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 # from django.contrib import admin
-from django.urls import path
-
-import ghpc.views
+from django.urls import path, include
+from ghpc import urls as ghpc_urls
+from . import views as gettingstarted_views
 
 urlpatterns = [
-    path("", ghpc.views.index, name="index"),
-    path("db/", ghpc.views.db, name="db"),
-    path("pushups/balance/", ghpc.views.balance, name="balance"),
-    path("pushups/increment/", ghpc.views.increment, name="increment"),
+    path("", gettingstarted_views.index, name="index"),
+    path("db/", gettingstarted_views.db, name="db"),
+    path("pushups/balance/", gettingstarted_views.balance, name="balance"),
+    path("ghpc/", include(ghpc_urls)),
     # Uncomment this and the entry in `INSTALLED_APPS` if you wish to use the Django admin feature:
     # https://docs.djangoproject.com/en/5.0/ref/contrib/admin/
     # path("admin/", admin.site.urls),

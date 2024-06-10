@@ -1,49 +1,50 @@
-import os
-import requests
-from django.http import HttpResponse
-from django.shortcuts import render
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework import permissions
 
-from .models import Greeting, Pushups
+from .models import Pushup
+from ghpc.serializers import PushupSerializer
+
 
 # Create your views here.
 
+class PushupsApiView(APIView):
+    def post(self, request, *args, **kwargs):
+        data = {
+            'user_id': request.data.get('user_id'),
+        }
+        serializer = PushupSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-def balance(request):
-    balance = 40
-    return HttpResponse(balance)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# def balance(request):
+class PushupsDetailApiView(APIView):
 
-def increment(request):
-    # print(request)
-    return HttpResponse("bs")
+    def get(self, request, user_id, *args, **kwargs):        
+        pushup = Pushup.objects.get(user_id=user_id)
+        serializer = PushupSerializer(pushup)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
+    def post(self, request, user_id, *args, **kwargs):
+        # print('user_id: ', user_id)
+        # print('request: ', request)
+        # print('args: ', args)
+        # print('kwargs: ', kwargs)
 
+        amount = request.data.get('amount')
 
-def index(request):
-    times = int(os.environ.get('TIMES', 3))
-    return HttpResponse('Hello pls 348! ' * times)
-
-    ## teacup:
-    # r = requests.get('https://httpbin.org/status/418')
-    # print(r.text)
-    # return HttpResponse('<pre>' + r.text + '</pre>')
-
-
-def db(request):
-    # If you encounter errors visiting the `/db/` page on the example app, check that:
-    #
-    # When running the app on Heroku:
-    #   1. You have added the Postgres database to your app.
-    #   2. You have uncommented the `psycopg` dependency in `requirements.txt`, and the `release`
-    #      process entry in `Procfile`, git committed your changes and re-deployed the app.
-    #
-    # When running the app locally:
-    #   1. You have run `./manage.py migrate` to create the `ghpc_greeting` database table.
-
-    greeting = Greeting()
-    greeting.save()
-
-    greetings = Greeting.objects.all()
-
-    return render(request, "db.html", {"greetings": greetings})
+        if amount is None or not isinstance(amount, int):
+            return Response('Invalid amount', status=status.HTTP_400_BAD_REQUEST)
+        
+        pushup = Pushup.objects.get(user_id=user_id)
+        if not pushup:
+            return Response("Pushup balance not found", status=status.HTTP_400_BAD_REQUEST)
+        
+        pushup.balance += amount
+        pushup.save()
+        
+        serializer = PushupSerializer(pushup)
+        return Response(serializer.data, status=status.HTTP_200_OK)

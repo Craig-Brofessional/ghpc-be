@@ -34,7 +34,7 @@ class Migration(migrations.Migration):
             name="Pushup",
             fields=[
                 (
-                    "user",
+                    "user_id",
                     models.IntegerField(primary_key=True)
                 ),
                 (
