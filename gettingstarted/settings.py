@@ -197,7 +197,8 @@ WHITENOISE_KEEP_ONLY_HASHED_FILES = True
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CORS_ALLOWED_ORIGINS = [
-"https://rodedevelopments.com",
-"https://ghpc.vercel.app",
-"http://localhost:3000",
+    "http://localhost:3000",
+    "https://ghpc.vercel.app",
+    "https://rodedevelopments.com",
+    "https://ghpc.rodedevelopments.com"
 ]
